@@ -1,0 +1,26 @@
+{
+  "audiovisual_files": {
+    "1c1f5a62-456b-4351-ac32-c9575b6144bb": {
+      "label": "AV File 1",
+      "file_url": "https://aviary-p-ualberta.s3.wasabisys.com/collection_resource_files/resource_files/000/225/487/original/SW168-169-cleaned-merged.wav?1705012323",
+      "duration": 1137.98754
+    }
+  },
+  "auto_generate_web_page": true,
+  "description": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "text": "A learning project."
+        }
+      ]
+    }
+  ],
+  "created_at": "2024-12-04T04:21:14.342Z",
+  "created_by": "pbinkley",
+  "item_type": "Audio",
+  "label": "Imported Event 1",
+  "updated_at": "2024-12-04T04:21:14.342Z",
+  "updated_by": "pbinkley"
+}
