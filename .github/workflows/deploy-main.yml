@@ -1,0 +1,97 @@
+name: Deploy main branch to GitHub Pages
+
+on:
+  # Trigger the workflow every time you push to the `main` branch
+  # Using a different branch name? Replace `main` with your branch’s name
+  push:
+    branches: [main]
+  # Allows you to run this workflow manually from the Actions tab on GitHub.
+  workflow_dispatch:
+
+# Allow this job to clone the repo and create a page deployment
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  checkout-build-deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-to-main-group
+      cancel-in-progress: true
+    steps:
+      - name: Checkout project repository
+        uses: actions/checkout@v4
+
+      - name: Read in the project file
+        id: project
+        uses: antifree/json-to-variables@v1.0.1
+        with:
+          filename: ./data/project.json
+          prefix: project
+
+      - name: Checkout project-client
+        uses: actions/checkout@v4
+        with:
+          repository: AVAnnotate/project-client
+          path: "./client"
+          ref: ${{vars.PROJECT_CLIENT_BRANCH || 'main'}}
+
+      - name: npm install
+        working-directory: "./client"
+        run: npm install
+
+      - name: Ensure a content directory
+        run: mkdir -p "./client/src/content"
+
+      - name: Copy data to content directory
+        run: cp -r ./data/* ./client/src/content
+
+      - name: Make a project directory if it does not exist
+        run: mkdir -p "./client/src/content/project"
+
+      - name: Move project.json file to project directory
+        run: mv ./client/src/content/project.json ./client/src/content/project/project.json
+
+      - name: Copy any VTT files to public
+        run: cp -r ./data/vtt/. ./client/public/
+
+      # Only publish when directed
+      - name: Setup Pages
+        if: ${{ env.project_publish_publish_pages_app == 'true' }}
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Make a manifests directory if it does not exist
+        run: mkdir -p "./client/src/content/manifests"
+
+      - name: Generate manifest
+        run: npx tsx ./client/generate-iiif-3-manifests.ts -d './data' -u "https://${{ github.repository_owner }}.github.io/${{ env.project_project_slug}}" -s 'false'
+
+      - name: Build Astro Client
+        uses: withastro/action@v2
+        with:
+          path: "./client"
+
+      - name: Deploy to GitHub Pages
+        if: ${{ env.project_publish_publish_pages_app == 'true' }}
+        id: deployment
+        uses: actions/deploy-pages@v4
+        env:
+          name: github-pages
+          url: ${{ steps.deployment.outputs.page_url }}
+
+      - name: Create an offline site
+        if: ${{ env.project_publish_publish_pages_app != 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          rm -rf ./site
+          mv ./client/dist ./site
+          cp ./client/static-site-readme.md ./site/README.md
+          git config user.email "gitbot@avannotate.com"
+          git config user.name "GitHub Action Bot"
+          git add ./site
+          git diff-index --quiet HEAD || git commit -m 'Created offline site'
+          git push

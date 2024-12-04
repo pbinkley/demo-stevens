@@ -1,0 +1,21 @@
+{
+  "users": [],
+  "publish": {
+    "publishPagesApp": false,
+    "publishSHA": "",
+    "publishISODate": ""
+  },
+  "project": {
+    "title": "Zora Neale Hurston’s Works Progress Administration Recordings",
+    "description": "",
+    "language": "",
+    "slug": "",
+    "authors": "",
+    "mediaPlayer": "universal",
+    "autoPopulateHomePage": "true",
+    "additionalUsers": [],
+    "": {},
+    "createdAt": "",
+    "updatedAt": ""
+  }
+}
