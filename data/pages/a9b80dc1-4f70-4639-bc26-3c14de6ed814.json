@@ -1,0 +1,23 @@
+{
+  "content": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "text": "This is some text."
+        }
+      ]
+    }
+  ],
+  "title": "This is a demo page",
+  "parent": "be478088-ae12-4854-8ab7-4fe8d85f519e",
+  "autogenerate": {
+    "enabled": false,
+    "type": "custom"
+  },
+  "slug": "this-is-a-demo-page",
+  "created_at": "2025-04-10T17:53:25.931Z",
+  "created_by": "pbinkley",
+  "updated_at": "2025-04-10T17:53:25.931Z",
+  "updated_by": "pbinkley"
+}
