@@ -1,0 +1,29 @@
+{
+  "audiovisual_files": {
+    "28ff3e4e-e7e0-4817-9f96-1645204883ea": {
+      "label": "Video from IA",
+      "is_offline": false,
+      "file_url": "https://archive.org/download/youtube-I5nIxTQgkzo/I5nIxTQgkzo.mp4",
+      "duration": 295,
+      "caption_set": []
+    }
+  },
+  "auto_generate_web_page": true,
+  "description": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "citation": "",
+  "item_type": "Video",
+  "label": "Demo video",
+  "created_at": "2025-04-10T18:12:34.925Z",
+  "created_by": "pbinkley",
+  "updated_at": "2025-04-10T18:12:34.925Z",
+  "updated_by": "pbinkley"
+}
